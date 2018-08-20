@@ -1,5 +1,6 @@
 import java.io.*;
 import java.util.*;
+
  
 class Node
 {
@@ -64,7 +65,7 @@ class Node
 		return this.count;
 	}
 
-	public incrementCount()
+	public void incrementCount()
 	{
 		this.count++;
 	}
@@ -89,7 +90,7 @@ class Node
 public class FPTree
 {
 	Node root;
-	List<List<Node>> HeaderTable;
+	HashMap<Integer, List<Node>> HeaderTable;
 	Map<Integer, Integer> searchHT;
 
 // FP-tree constructor
@@ -104,7 +105,6 @@ public class FPTree
 	public void insert(ArrayList<Integer> new_itemset)
  	{	
  		Node pointer = this.root;
-
  		Node curr_node = this.root;
  		Iterator<Integer> it = new_itemset.iterator();
  		while(it.hasNext()){
@@ -117,16 +117,17 @@ public class FPTree
  			else{
  				Node next_node = new Node(curr_item, 1);
  				next_node.SetParent(curr_node);
- 				// [TODO]: Link next_node to last node of Header Table - hashmap of item and headertable ???
+ 				// Link next_node to last node of Header Table
+ 				if (HeaderTable.get(curr_item) == null){
+ 					HeaderTable.put(curr_item, new ArrayList<Node>(next_node));
+ 				}
+ 				else{
+ 					HeaderTable.get(curr_item).add(next_node);
+ 				}
  				curr_node = next_node;
  			}
  		}
  	}
-
-	public readTransactions()
-	{
-
-	}
 
 //	Obtain hashmap for each item to map item to its support
 	public HashMap<Integer, Integer> makeHashmap(Scanner s)
@@ -134,7 +135,7 @@ public class FPTree
 		HashMap<Integer, Integer> map = new HashMap<Integer, Integer>();
 		while (s.hasNext()) 
 		{
-			int t = s.next();
+			int t = s.nextInt();
 			if (map.containsKey(t)) 
 			{
             	int count = map.get(t);
@@ -148,11 +149,10 @@ public class FPTree
 		return map;
 	}
 
-
 //	Get hashmap as per descending values of counts of items
-	private static HashMap<Integer, Integer> sortHashmap(HashMap<Integer, Integer> map, int minSup)
+	private static List<Integer> sortHashmap(HashMap<Integer, Integer> map, int minSup)
 	{
-		List list = new LinkedList(map.entrySet());
+		List list = new ArrayList<Integer>(map.entrySet());
 		Collections.sort(list, new Comparator() 
 		{
 			public int compare(Object o1, Object o2) {
@@ -162,14 +162,16 @@ public class FPTree
 
 		list.removeIf(p -> p.getValue() < minSup);	
 
-		HashMap sortedHashMap = new LinkedHashMap();
+		return list;
+
+		/*HashMap sortedHashMap = new LinkedHashMap();
 		for (Iterator it = list.iterator(); it.hasNext();) 
 		{
 			Map.Entry entry = (Map.Entry) it.next();
 			sortedHashMap.put(entry.getKey(), entry.getValue());
 		} 
 		
-		return sortedHashMap;
+		return sortedHashMap;*/
 	}
 
 //	Remove non frequent items from each transaction itemset
@@ -190,17 +192,31 @@ public class FPTree
 	}
 
 
+	public void constructTree(int minSup){
+		// Find support of all 1-itemsets
+		File file = new File("retail.txt");
+		Scanner sc = new Scanner(file);
+		HashMap<Integer, Integer> one_itemset_support = makeHashmap(sc);
+		sc.close();
 
-	public constructTree(){
-		// Read all items and create hashmap to 
+		// Rearrange transactions in Flist order
+		List<Integer> flist = sortHashmap(one_itemset_support, minSup);
 
+		// Add each transaction as a path and Link nodes of same item
+		Scanner scan_trans = new Scanner(file);
+		while(scan_trans.hasNextLine()){
+			String trans = scan_trans.nextLine();
+			// List<Integer> transaction = Arrays.asList(str.split("\\s* \\s*"));
+			List<Integer> transaction = Arrays.asList(trans.split("\\s+"));
+			List<Integer> pruned_trans = RemoveNonFrequent(transaction, minSup, one_itemset_support);
+			insert(pruned_trans);
+		}
 
 	}
 
 // build Conditional Pattern Base
-	public buildCPB(ArrayList<Integer> itemset){
-		List<List<Integer>> cpb = new ArrayList<Integer>(); 
-
+	public void buildCPB(int item){
+		List<List<Integer>> cpb = new ArrayList<ArrayList<Integer>>(); 
 
 	}
 
