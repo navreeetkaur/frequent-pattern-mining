@@ -1,6 +1,6 @@
-# apriori_vs_fp-tree
+# Frequent Itemset Mining
 
-## Frequent Itemset Mining
+## Apriori and FP-tree
 
 This project is an assignemnt of the Data Mining Course(COL761) at IIT Delhi.
 
