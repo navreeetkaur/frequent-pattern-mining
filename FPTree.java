@@ -39,7 +39,8 @@ class Node
 		return this.children;
 	}
 
-	public int getCount(){
+	public int getCount()
+	{
 		return this.count;
 	}
 
@@ -59,9 +60,10 @@ public class FPTree
 		HeaderTable = new ArrayList<ArrayList<Node>>();
 	}
 
-	public void insert(ArrayList<Integer>)
+	public void insert(ArrayList<Integer> new_itemset)
 	{	
 		Node pointer = this.root;
+		
 
 	}
 
@@ -70,7 +72,28 @@ public class FPTree
 
 	}
 
-	private static List sortHashmap(HashMap<Integer, Integer> map)
+//	Obtain hashmap for each item
+	public HashMap<Integer, Integer> makeHashmap(Scanner s)
+	{	
+		HashMap<Integer, Integer> map = new HashMap<Integer, Integer>();
+		while (s.hasNext()) 
+		{
+			int t = s.next();
+			if (map.containsKey(t)) 
+			{
+            	int count = map.get(t);
+				map.put(t, count + 1);
+			} 
+			else 
+			{
+				map.put(temp, 1);
+			}
+		}
+		return map;
+	}
+
+//	Get hashmap as per descending values of counts
+	private static HashMap<Integer, Integer> sortHashmap(HashMap<Integer, Integer> map, int minSup)
 	{
 		List list = new LinkedList(map.entrySet());
 		Collections.sort(list, new Comparator() 
@@ -80,45 +103,36 @@ public class FPTree
 			}
 		});
 
-		return list;
-	}
+		list.removeIf(p -> p.getValue() < minSup);	
 
-       /*
-       // Here I am copying the sorted list in HashMap
-       // using LinkedHashMap to preserve the insertion order
-       HashMap sortedHashMap = new LinkedHashMap();
-       for (Iterator it = list.iterator(); it.hasNext();) {
-              Map.Entry entry = (Map.Entry) it.next();
-              sortedHashMap.put(entry.getKey(), entry.getValue());
-       } 
-       return sortedHashMap;
-       */
-
-	public HashMap<Integer, Integer> SortItemsByFrequency(Scanner s)
-	{	
-		HashMap<Integer, Integer> 
-		while (s.hasNext()) 
+		HashMap sortedHashMap = new LinkedHashMap();
+		for (Iterator it = list.iterator(); it.hasNext();) 
 		{
-			int t = s.next();
-			if (mapToFrequency.containsKey(t)) 
-			{
-            	int count = mapToFrequency.get(t);
-				mapToFrequency.put(t, count + 1);
-			} 
-			else 
-			{
-				mapToFrequency.put(temp, 1);
+			Map.Entry entry = (Map.Entry) it.next();
+			sortedHashMap.put(entry.getKey(), entry.getValue());
+		} 
+		
+		return sortedHashMap;
+	}
+
+//	Remove non frequent items from each transaction itemset
+	private static ArrayList<Integer> RemoveNonFrequent(ArrayList<Integer> transaction, int minSup, HashMap<Integer, Integer> map)
+	{
+		ArrayList<Integer> list = transaction;
+		Collections.sort(list, new Comparator() 
+		{
+			public int compare(Object o1, Object o2) {
+				return ((Comparable) ((Map.Entry) (o2)).getValue()).compareTo(((Map.Entry) (o1)).getValue());
 			}
-		}
+		});
 
+		list.removeIf(p -> p.getValue() < minSup);
 
-
-
-
-
-
+		return list;
 
 	}
+
+
 
 
 }
