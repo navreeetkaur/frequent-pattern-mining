@@ -66,7 +66,7 @@ class Node
 
 	public incrementCount()
 	{
-		this.count ++;
+		this.count++;
 	}
 
 	public Node hasChild(int i)
@@ -88,7 +88,7 @@ class Node
 public class FPTree
 {
 	Node root;
-	List<List<Node>> HeaderTable;
+	List<List<Nod>> HeaderTable;
 	Map<Integer, Integer> searchHT;
 
 // constructor
@@ -125,6 +125,10 @@ public class FPTree
 
 	}
 
+	// build Conditional Pattern Base
+	public buildCPB(ArrayList<Integer> item){
+
+	}
 
 }
 
