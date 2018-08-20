@@ -7,7 +7,27 @@ class Node
 	int count;
 	Node parent;
 	Node next;
-	ArrayList<Node> children = new ArrayList<Node>();
+	List<Node> children;
+
+	public Node()
+	{
+		this.item = -1;
+		this.count = 0;
+		this.parent = null;
+		this.next = null;
+		this.children = new ArrayList<Node>();
+
+	}
+
+	public Node(int item, int count)
+	{
+		this.item = item;
+		this.count = count;
+		this.parent = null;
+		this.next = null;
+		this.children = new ArrayList<Node>();
+
+	}
 
 	public int GetItem()
 	{
@@ -39,8 +59,26 @@ class Node
 		return this.children;
 	}
 
-	public int getCount(){
+	public int getCount()
+	{
 		return this.count;
+	}
+
+	public incrementCount()
+	{
+		this.count ++;
+	}
+
+	public Node hasChild(int i)
+	{
+		Iterator<Node> it = this.children.iterator();
+		while(it.hasNext()){
+			Node curr_node = it.next();
+			if (curr_node.GetItem() == i){
+				return curr_node;
+			}
+		}
+		return null;
 	}
 
 }
@@ -50,19 +88,36 @@ class Node
 public class FPTree
 {
 	Node root;
-	ArrayList<ArrayList<Node>> HeaderTable;
+	List<List<Node>> HeaderTable;
+	Map<Integer, Integer> searchHT;
 
-
+// constructor
 	public FPTree()
 	{
 		root = new Node();
 		HeaderTable = new ArrayList<ArrayList<Node>>();
+		searchHT = new HashMap<Integer, Integer>();
 	}
 
-	public void insert(ArrayList<Integer>)
+// insert a transaction into the tree
+	public void insert(ArrayList<Integer> new_itemset)
 	{	
-		Node pointer = this.root;
-
+		Node curr_node = this.root;
+		Iterator<Integer> it = new_itemset.iterator();
+		while(it.hasNext()){
+			int curr_item = it.next();
+			Node child = curr_node.hasChild(curr_item);
+			if (child != null){
+				child.incrementCount();
+				curr_node = child;
+			}
+			else{
+				Node next_node = new Node(curr_item, 1);
+				next_node.SetParent(curr_node);
+				// [TODO]: Link next_node to last node of Header Table - hashmap of item and headertable ???
+				curr_node = next_node;
+			}
+		}
 	}
 
 	public readTransactions()
