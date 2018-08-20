@@ -7,7 +7,7 @@ class Node
 	int count;
 	Node parent;
 	Node next;
-	ArrayList<Node> children = new ArrayList<Node>();
+	List<Node> children;
 
 	public int GetItem()
 	{
@@ -50,7 +50,7 @@ class Node
 public class FPTree
 {
 	Node root;
-	ArrayList<ArrayList<Node>> HeaderTable;
+	List<List<Node>> HeaderTable;
 
 
 	public FPTree()
@@ -67,6 +67,56 @@ public class FPTree
 
 	public readTransactions()
 	{
+
+	}
+
+	private static List sortHashmap(HashMap<Integer, Integer> map)
+	{
+		List list = new LinkedList(map.entrySet());
+		Collections.sort(list, new Comparator() 
+		{
+			public int compare(Object o1, Object o2) {
+				return ((Comparable) ((Map.Entry) (o2)).getValue()).compareTo(((Map.Entry) (o1)).getValue());
+			}
+		});
+
+		return list;
+	}
+
+       /*
+       // Here I am copying the sorted list in HashMap
+       // using LinkedHashMap to preserve the insertion order
+       HashMap sortedHashMap = new LinkedHashMap();
+       for (Iterator it = list.iterator(); it.hasNext();) {
+              Map.Entry entry = (Map.Entry) it.next();
+              sortedHashMap.put(entry.getKey(), entry.getValue());
+       } 
+       return sortedHashMap;
+       */
+
+	public HashMap<Integer, Integer> SortItemsByFrequency(Scanner s)
+	{	
+		HashMap<Integer, Integer> 
+		while (s.hasNext()) 
+		{
+			int t = s.next();
+			if (mapToFrequency.containsKey(t)) 
+			{
+            	int count = mapToFrequency.get(t);
+				mapToFrequency.put(t, count + 1);
+			} 
+			else 
+			{
+				mapToFrequency.put(temp, 1);
+			}
+		}
+
+
+
+
+
+
+
 
 	}
 
