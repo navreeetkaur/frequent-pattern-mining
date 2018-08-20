@@ -92,6 +92,7 @@ public class FPTree
 	List<List<Node>> HeaderTable;
 	Map<Integer, Integer> searchHT;
 
+// FP-tree constructor
 	public FPTree()
 	{
 		root = new Node();
@@ -99,6 +100,7 @@ public class FPTree
 		searchHT = new HashMap<Integer, Integer>();
 	}
 
+// Insert given transaction into FP-tree as a path
 	public void insert(ArrayList<Integer> new_itemset)
  	{	
  		Node pointer = this.root;
@@ -126,7 +128,7 @@ public class FPTree
 
 	}
 
-//	Obtain hashmap for each item
+//	Obtain hashmap for each item to map item to its support
 	public HashMap<Integer, Integer> makeHashmap(Scanner s)
 	{	
 		HashMap<Integer, Integer> map = new HashMap<Integer, Integer>();
@@ -147,7 +149,7 @@ public class FPTree
 	}
 
 
-//	Get hashmap as per descending values of counts
+//	Get hashmap as per descending values of counts of items
 	private static HashMap<Integer, Integer> sortHashmap(HashMap<Integer, Integer> map, int minSup)
 	{
 		List list = new LinkedList(map.entrySet());
@@ -187,8 +189,18 @@ public class FPTree
 
 	}
 
+
+
+	public constructTree(){
+		// Read all items and create hashmap to 
+
+
+	}
+
 // build Conditional Pattern Base
-	public buildCPB(ArrayList<Integer> item){
+	public buildCPB(ArrayList<Integer> itemset){
+		List<List<Integer>> cpb = new ArrayList<Integer>(); 
+
 
 	}
 
