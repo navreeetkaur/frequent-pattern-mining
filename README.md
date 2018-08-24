@@ -70,15 +70,19 @@ Apriori.java implements apriori algorithm for mining frequent itemsets. Function
 output file name and support percentage, reads data set from input file and writes all the frequent item sets in output file with given support.
 
 
-(4) Test.java
-
-Contains the main function. Executes fp-growth or apriori depending on the arguments given. Call to this is made by the bash file
+(4) Test.java: Contains the main function. Executes fp-growth or apriori depending on the arguments given. Call to this is made by the bash file
 
 
 (5) plot.py
 
-generates a plot using matplotlib where the x-axis varies the support threshold and y-axis shows the corresponding running times.
+Generates a plot using matplotlib where the x-axis varies the support threshold and y-axis shows the corresponding running times.
 It plots the running times of apriori and fptree at support thresholds of 1%, 5%, 10%, 25%, 50%, and 90%
+
+
+(6) check.py: Checks if results of two output files match
+
+
+(7) create_dataset.py: Creates a random dataset of integers similar to retail.txt
 
 
 The performance of Apriori algorithm is compared with FP-tree in the report.
