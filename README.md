@@ -2,7 +2,7 @@
 
 ## Apriori and FP-tree
 
-This project is an assignemnt of the Data Mining Course(COL761) at IIT Delhi.
+This project is an [assignemnt](https://github.com/navreeetkaur/data-mining-assignments/blob/master/COL761_HW1.pdf) of the Data Mining Course(COL761) at IIT Delhi.
 
 Apriori Algorithm and FP-tree are used to mine frequent itemsets on this dataset: http://fimi.ua.ac.be/data/retail.dat
 Details about the dataset can be found at http://fimi.ua.ac.be/data/retail.pdf
